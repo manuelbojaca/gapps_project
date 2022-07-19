@@ -1,6 +1,7 @@
+import React from "react";
 import { View, Button } from "react-native";
 
-const s = require("../components/styles/backgroundG");
+const s = require("../styles/backgroundG");
 const Logo = require("../components/logo/Logo");
 
 function Title({ navigation }) {

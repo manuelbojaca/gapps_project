@@ -1,24 +1,41 @@
-import { TextInput, View, Text } from "react-native";
+import React from "react";
+import { TextInput, View, Pressable } from "react-native";
 import { useState } from "react";
 const Logo = require("../components/logo/Logo");
-const s = require("../components/styles/backgroundG");
+const bs = require("../styles/backgroundG");
+const is = require("../styles/InputStyles");
+const us = require("../styles/ButtonStyles");
+const ts = require("../styles/TextStyles");
+import TextFonted from "../styles/TextFonted";
 
 function Signin({ navigation }) {
+  const handleSubmit = () => {
+    navigation.navigate("Pruebas");
+  };
   const [email, onChangeEmail] = useState("");
   const [password, onChangePassword] = useState("");
+
   return (
-    <View style={s.alwaysback}>
+    <View style={bs.alwaysback}>
       <Logo />
-      <Text>Inicia sesión</Text>
+      <TextFonted styles={ts.default}>
+        Inicia sesión, para comenzar a viajar
+      </TextFonted>
       <TextInput
-        onChangeText={(newText) => onChangeEmail(newText)}
+        style={is.default}
         value={email}
+        onChangeText={(newText) => onChangeEmail(newText)}
         keyboardType="email-address"
       />
       <TextInput
-        onChangeText={(newText) => onChangeEmail(newText)}
+        style={is.default}
+        value={password}
+        onChangeText={(newText) => onChangePassword(newText)}
         secureTextEntry={true}
       />
+      <Pressable style={us.getinto} onPress={handleSubmit}>
+        <TextFonted styles={us.text}>INGRESAR</TextFonted>
+      </Pressable>
     </View>
   );
 }

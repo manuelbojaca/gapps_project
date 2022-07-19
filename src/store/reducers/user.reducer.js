@@ -40,6 +40,11 @@ export const userSlice = createSlice({
   },
 });
 
-export const { addBook, removeBook } = userSlice.actions;
+export const {
+  user_load,
+  user_login_request,
+  user_login_success,
+  user_logout_success,
+} = userSlice.actions;
 
 export default userSlice.reducer;
