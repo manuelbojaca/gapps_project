@@ -4,6 +4,7 @@ const initialState = {
   loading: false,
   logged: false,
   user: {},
+  location: [],
 };
 
 export const userSlice = createSlice({
@@ -37,6 +38,15 @@ export const userSlice = createSlice({
         user: { ...action.payload },
       };
     },
+    user_location(state, action) {
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          location: [...action.payload],
+        },
+      };
+    },
   },
 });
 
@@ -45,6 +55,7 @@ export const {
   user_login_request,
   user_login_success,
   user_logout_success,
+  user_location,
 } = userSlice.actions;
 
 export default userSlice.reducer;
