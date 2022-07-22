@@ -27,7 +27,7 @@ function Signin({ navigation }) {
   const dispatch = useDispatch();
   const [email, onChangeEmail] = useState("");
   const [password, onChangePassword] = useState("");
-  const [logged, setlogged] = useState(false);
+  const [logged, setLogged] = useState(false);
   const [trigger, { data, error, isLoading }] = useSigninMutation();
   const [getUserById, result] = useGetUserByIdMutation();
 
@@ -38,18 +38,18 @@ function Signin({ navigation }) {
   useEffect(() => {
     if (data) {
       getUserById({ id: data.id, token: data.token });
-      setlogged(true);
+      setLogged(true);
       if (data.role === "passager") {
         navigation.navigate("Home");
       } else {
-        navigation.navigate("Pruebas");
+        navigation.navigate("Driver");
       }
     }
   }, [data]);
 
   useEffect(() => {
-    console.log("Result: ", result.data);
-    logged && dispatch(user_load(result.data));
+    console.log("Result: ", result?.data?.data);
+    logged && dispatch(user_load(result?.data?.data));
   }, [result]);
 
   const handleSubmit = async (e) => {
@@ -68,28 +68,29 @@ function Signin({ navigation }) {
       <TextFonted styles={ts.default}>
         Inicia sesión, para comenzar a viajar
       </TextFonted>
+      <TextFonted styles={ts.default}>Ingresa tu email</TextFonted>
       <TextInput
         style={is.default}
         value={email}
         onChangeText={(newText) => onChangeEmail(newText)}
         keyboardType="email-address"
       />
+      <TextFonted styles={ts.default}>Ingresa tu contraseña</TextFonted>
       <TextInput
         style={is.default}
         value={password}
         onChangeText={(newText) => onChangePassword(newText)}
         secureTextEntry={true}
       />
-
       <Pressable style={us.getinto} onPress={handleSubmit}>
         <TextFonted styles={us.text}>INGRESAR</TextFonted>
       </Pressable>
-      <TextFonted
-        styles={{ ...ts.default, marginTop: 20 }}
-        //onPress={navigation.navigate("Register")}
-      >
-        Registrarse
-      </TextFonted>
+      <Pressable onPress={() => navigation.navigate("Register")}>
+        <TextFonted styles={{ ...ts.default, marginTop: 20 }}>
+          Registrarse
+        </TextFonted>
+      </Pressable>
+
       {error !== undefined && (
         <TextFonted color="white">Usuario o contraseña incorrectos</TextFonted>
       )}

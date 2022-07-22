@@ -10,6 +10,9 @@ export const store = configureStore({
   reducer: {
     users: userReducer,
     [userApi.reducerPath]: userApi.reducer,
+    route: routeReducer,
+    routes: routesReducer,
+    vehicleReducer: vehicleReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(userApi.middleware),

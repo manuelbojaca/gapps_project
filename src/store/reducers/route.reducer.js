@@ -6,7 +6,7 @@ const initialState = {
   location: [],
 };
 
-export const userSlice = createSlice({
+export const routeSlice = createSlice({
   name: "route",
   initialState,
   reducers: {
@@ -32,6 +32,6 @@ export const userSlice = createSlice({
 });
 
 export const { route_load, loading_route_request, loading_route_success } =
-  userSlice.actions;
+  routeSlice.actions;
 
-export default userSlice.reducer;
+export default routeSlice.reducer;
