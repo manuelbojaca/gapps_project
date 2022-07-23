@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { TextInput, View, Pressable } from "react-native";
 import { useState } from "react";
-const Logo = require("../components/logo/Logo");
+import Logo from "../components/elements/Logo";
 const bs = require("../styles/backgroundG");
 const is = require("../styles/InputStyles");
 const us = require("../styles/ButtonStyles");
@@ -64,7 +64,7 @@ function Signin({ navigation }) {
 
   return (
     <View style={bs.alwaysback}>
-      <Logo />
+      <Logo width={250} />
       <TextFonted styles={ts.default}>
         Inicia sesión, para comenzar a viajar
       </TextFonted>

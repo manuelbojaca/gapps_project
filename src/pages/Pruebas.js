@@ -14,11 +14,9 @@ async function getValueFor(key) {
 function Pruebas({ navigation }) {
   const { user } = useSelector((state) => state.users);
   console.log("User", user);
-  try {
-    var token = getValueFor("token");
-  } catch (err) {
-    console.log("Pruebas:", err);
-  }
+
+  let token;
+  getValueFor("token").then((t) => (token = t));
   console.log("Token: ", token);
   return (
     <View style={s.alwaysback}>

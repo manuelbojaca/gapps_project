@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { TextInput, View, Pressable } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { useState } from "react";
-const Logo = require("../components/logo/Logo");
+import Logo from "../components/elements/Logo";
 import TextFonted from "../styles/TextFonted";
 const bs = require("../styles/backgroundG");
 const is = require("../styles/InputStyles");

@@ -30,6 +30,13 @@ export const theme = {
     l: 20,
     xl: 40,
   },
+  rendersize: {
+    xs: 50,
+    s: 100,
+    m: 150,
+    l: 250,
+    xl: 450,
+  },
   typography: StyleSheet.create({
     header: {
       fontFamily: "nunito-sans",

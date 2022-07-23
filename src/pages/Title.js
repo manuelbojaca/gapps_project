@@ -2,7 +2,7 @@ import React from "react";
 import { View, Button } from "react-native";
 
 const s = require("../styles/backgroundG");
-const Logo = require("../components/logo/Logo");
+import Logo from "../components/elements/Logo";
 
 function Title({ navigation }) {
   return (

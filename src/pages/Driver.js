@@ -1,14 +1,15 @@
 import * as React from "react";
-import { StyleSheet, Text, View, Dimensions } from "react-native";
+import { View } from "react-native";
 import { useSelector } from "react-redux";
-import TextFonted from "../styles/TextFonted";
+import DriverHeader from "../components/driverscreen/DriverHeader";
+const bs = require("../styles/backgroundG");
 
 function Driver({ navigation }) {
-  const user = useSelector((state) => state.users);
+  const { user } = useSelector((state) => state.users);
   console.log("User:", user);
   return (
-    <View>
-      <TextFonted>{}</TextFonted>
+    <View style={bs.driverback}>
+      <DriverHeader />
     </View>
   );
 }
