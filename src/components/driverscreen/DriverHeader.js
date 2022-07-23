@@ -25,7 +25,7 @@ const DriverHeader = () => {
 const styles = StyleSheet.create({
   header: {
     alignItems: "center",
-    justifyContent: "right",
+    justifyContent: "",
     //height: 30,
   },
 });

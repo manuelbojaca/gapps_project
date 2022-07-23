@@ -64,7 +64,7 @@ function Signin({ navigation }) {
 
   return (
     <View style={bs.alwaysback}>
-      <Logo width={250} />
+      <Logo />
       <TextFonted styles={ts.default}>
         Inicia sesión, para comenzar a viajar
       </TextFonted>

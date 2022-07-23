@@ -1,11 +1,10 @@
 import React from "react";
 import { Image, StyleSheet } from "react-native";
-const ls = require("../../styles/LogoStyles");
 
 const Logo = () => {
   return (
     <Image
-      style={ls.driverlogo}
+      style={styles.logo}
       source={{
         uri: "https://res.cloudinary.com/palgas-project/image/upload/v1657900717/logo/GAppSTR_atsssx.png",
       }}
