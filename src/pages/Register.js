@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { TextInput, View, Pressable } from "react-native";
-import { Picker } from "@react-native-picker/picker";
 import { useState } from "react";
 import Logo from "../components/elements/Logo";
 import TextFonted from "../styles/TextFonted";

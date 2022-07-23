@@ -33,7 +33,7 @@ export const vehicleApi = createApi({
         },
       }),
     }),
-    newVehicle: builder.mutation({
+    createVehicle: builder.mutation({
       query: (body, token) => ({
         url: "/",
         method: "POST",
@@ -68,7 +68,7 @@ export const vehicleApi = createApi({
 export const {
   useGetVehiclesQuery,
   useGetVehicleByIdMutation,
-  useNewVehicleMutation,
+  useCreateVehicleMutation,
   useEditVehicleMutation,
   useDeleteVehicleMutation,
 } = userApi;

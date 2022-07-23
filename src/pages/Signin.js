@@ -39,6 +39,7 @@ function Signin({ navigation }) {
     if (data) {
       getUserById({ id: data.id, token: data.token });
       setLogged(true);
+      
       if (data.role === "passager") {
         navigation.navigate("Home");
       } else {
