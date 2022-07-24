@@ -8,8 +8,11 @@ module.exports = StyleSheet.create({
     padding: theme.spacing.xs,
   },
   radioBtn: {
-    width: 70,
-    height: 70,
+    alignSelf: "center",
+    justifyContent: "center",
+    margin: 15,
+    width: "70%",
+    height: 40,
     borderRadius: 400,
     backgroundColor: theme.colors.driverBtn,
   },
@@ -18,7 +21,9 @@ module.exports = StyleSheet.create({
     fontSize: theme.textsize.m,
   },
   textRadioBtn: {
+    alignSelf: "center",
     color: theme.colors.deftext,
-    fontSize: theme.textsize.xl,
+    fontSize: theme.textsize.l,
+    fontWeight: "bold",
   },
 });

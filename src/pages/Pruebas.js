@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 async function getValueFor(key) {
-  const result = await AsyncStorage.getItem(key);
+  let result = await AsyncStorage.getItem(key);
   return result;
 }
 

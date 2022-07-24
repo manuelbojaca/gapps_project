@@ -34,13 +34,13 @@ export const vehicleApi = createApi({
       }),
     }),
     createVehicle: builder.mutation({
-      query: (body, token) => ({
+      query: ({ body, token }) => ({
         url: "/",
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
         },
-        body,
+        body: body,
       }),
     }),
     editVehicle: builder.mutation({
@@ -71,4 +71,4 @@ export const {
   useCreateVehicleMutation,
   useEditVehicleMutation,
   useDeleteVehicleMutation,
-} = userApi;
+} = vehicleApi;

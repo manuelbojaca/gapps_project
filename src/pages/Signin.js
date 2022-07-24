@@ -39,12 +39,14 @@ function Signin({ navigation }) {
     if (data) {
       getUserById({ id: data.id, token: data.token });
       setLogged(true);
-      
-      if (data.role === "passager") {
-        navigation.navigate("Home");
-      } else {
-        navigation.navigate("Driver");
-      }
+      setTimeout(() => {
+        console.log("Esperando");
+        if (data.role === "passager") {
+          navigation.navigate("Home");
+        } else {
+          navigation.navigate("Driver");
+        }
+      }, 1000);
     }
   }, [data]);
 

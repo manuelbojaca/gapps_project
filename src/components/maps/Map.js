@@ -7,13 +7,13 @@ import { GOOGLE_MAPS_KEY } from "@env";
 
 const Map = () => {
   const [origin, setOrigin] = useState({
-    latitude: 4.598023,
-    longitude: -74.069647,
+    latitude: originLat,
+    longitude: originLon,
   });
 
   const [destination, setDestination] = useState({
-    latitude: 4.700703,
-    longitude: -74.143541,
+    latitude: originLat,
+    longitude: originLon,
   });
 
   return (

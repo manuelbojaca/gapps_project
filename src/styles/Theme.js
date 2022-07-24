@@ -11,6 +11,9 @@ const palette = {
 export const theme = {
   colors: {
     background: palette.red,
+    backgroundmodal: palette.black,
+    backgroundcards: palette.white,
+    shadowmodal: palette.black,
     driverBtn: palette.red,
     title: palette.pink,
     inputbg: palette.white,

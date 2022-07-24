@@ -7,25 +7,28 @@ const is = require("../../styles/InputStyles");
 const us = require("../../styles/ButtonStyles");
 const ts = require("../../styles/TextStyles");
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useCreateVehicleMutation } from "../../store/services/vehicleAPI";
-import { add_vehicle } from "../../store/reducers/user.reducer";
+import { useCreateRouteMutation } from "../../store/services/routeAPI";
 import { Picker } from "@react-native-picker/picker";
 
-export default function VehicleCreate({ vehicleOpen, setVehicleOpen }) {
+export default function RouteCreate({ routesOpen, setRoutesOpen }) {
   const dispatch = useDispatch();
   const [type, setType] = useState("");
-  const [brand, setBrand] = useState("");
-  const [color, setColor] = useState("");
-  const [plate, setPlate] = useState("");
-  const [seats, setSeats] = useState("");
-  const vehicleData = {
+  const [name, setName] = useState("");
+  const [origin, setOrigin] = useState("");
+  const [destination, setDestination] = useState("");
+  const [time, setTime] = useState("");
+  const [occupiedseats, setOccupiedseats] = useState("");
+
+  const routeData = {
     type: type,
-    brand: brand,
-    color: color,
-    plate: plate,
-    seats: seats,
+    name: name,
+    origin: origin,
+    destination: destination,
+    time: time,
+    occupiedseats: occupiedseats,
   };
-  const [trigger, { data, error, isLoading }] = useCreateVehicleMutation();
+
+  const [trigger, { data, error, isLoading }] = useCreateRouteMutation();
 
   async function getValueFor(key) {
     let result = await AsyncStorage.getItem(key);
@@ -41,27 +44,29 @@ export default function VehicleCreate({ vehicleOpen, setVehicleOpen }) {
     const token = await getValueFor("token");
     setTimeout(() => {
       console.log("wait:", token);
-      trigger({ body: vehicleData, token: token }).catch((err) =>
+      trigger({ body: routeData, token: token }).catch((err) =>
         console.log(err)
       );
     }, 5000);
-    setVehicleOpen(!setVehicleOpen);
+    setRoutesOpen(!setRoutesOpen);
     console.log("pasa");
   };
 
   return (
     <React.Fragment>
-      <Modal animationType="slide" transparent={true} visible={vehicleOpen}>
+      <Modal animationType="slide" transparent={true} visible={routesOpen}>
         <View style={bs.modalcontainer}>
           <View style={bs.modalstyle}>
             <Button
               title="Cerrar"
-              onPress={() => setVehicleOpen(!setVehicleOpen)}
+              onPress={() => setRoutesOpen(!setRoutesOpen)}
             />
             <TextFonted styles={ts.default}>
-              Agrega un vehiculo a tu perfil de usuario.
+              Agrega un ruta para comenzar a ahorrar.
             </TextFonted>
-            <TextFonted styles={ts.default}>Tipo de vehiculo</TextFonted>
+            <TextFonted styles={ts.default}>
+              Elige si tu ruta es una rutina o un viaje
+            </TextFonted>
             <Picker
               style={{ width: "60%" }}
               dropdownIconColor="white"
@@ -70,42 +75,43 @@ export default function VehicleCreate({ vehicleOpen, setVehicleOpen }) {
             >
               <Picker.Item
                 style={{ fontSize: 20 }}
-                label="Automovil"
-                value="car"
+                label="Rutina"
+                value="routine"
               />
               <Picker.Item
                 style={{ fontSize: 20 }}
-                label="Camioneta"
-                value="truck"
+                label="Viaje"
+                value="trip"
               />
-              <Picker.Item style={{ fontSize: 20 }} label="Moto" value="bike" />
             </Picker>
-            <TextFonted styles={ts.default}>Marca</TextFonted>
+            <TextFonted styles={ts.default}>Nombra tu ruta</TextFonted>
             <TextInput
               style={is.default}
-              value={brand}
-              onChangeText={(newText) => setBrand(newText)}
+              value={name}
+              onChangeText={(newText) => setName(newText)}
             />
-            <TextFonted styles={ts.default}>Color</TextFonted>
-            <TextInput
-              style={is.default}
-              value={color}
-              onChangeText={(newText) => setColor(newText)}
-            />
-            <TextFonted styles={ts.default}>Agrega la Placa</TextFonted>
-            <TextInput
-              style={is.default}
-              value={plate}
-              onChangeText={(newText) => setPlate(newText)}
-            />
+            <Pressable style={us.getinto} onPress={handleSubmit}>
+              <TextFonted styles={us.text}>
+                SELECCIONA RUTA LA EN EL MAPA
+              </TextFonted>
+            </Pressable>
+            {/* DATE PICKER*/}
             <TextFonted styles={ts.default}>
-              Numero de asientos disponibles
+              Elige la hora de partida
             </TextFonted>
             <TextInput
               style={is.default}
-              value={seats}
-              onChangeText={(newText) => setSeats(newText)}
-              keyboardType="numeric"
+              value={time}
+              onChangeText={(newText) => setTime(newText)}
+            />
+            <TextFonted styles={ts.default}>
+              Elige la cantidad de asientos disponibles{" "}
+            </TextFonted>
+            <TextInput
+              style={is.default}
+              value={occupiedseats}
+              onChangeText={(newText) => setPlate(newText)}
+              keyboardtype="numeric"
             />
             <Pressable style={us.getinto} onPress={handleSubmit}>
               <TextFonted styles={us.text}>CREAR</TextFonted>

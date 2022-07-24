@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { TextInput, View, Pressable } from "react-native";
+import { TextInput, View, Pressable, StyleSheet } from "react-native";
 import { useState } from "react";
 import Logo from "../components/elements/Logo";
 import TextFonted from "../styles/TextFonted";
@@ -12,6 +12,8 @@ import { useSignupMutation } from "../store/services/userAPI";
 import { useDispatch } from "react-redux";
 import { user_load } from "../store/reducers/user.reducer";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useGetUserByIdMutation } from "../store/services/userAPI";
+import { Picker } from "@react-native-picker/picker";
 
 const storeData = async (key, value) => {
   try {
@@ -117,11 +119,24 @@ function Register({ navigation }) {
         onChangeText={(newText) => setPassword(newText)}
         secureTextEntry={true}
       />
-      <RadioButtonRN
-        boxStyle={{ height: 20 }}
-        data={radioData}
-        selectedBtn={(e) => setRole(e)}
-      />
+      <TextFonted styles={ts.default}>Elige como quieres usar gapps</TextFonted>
+      <Picker
+        style={{ width: "40%" }}
+        dropdownIconColor="white"
+        selectedValue={role}
+        onValueChange={(itemValue, itemIndex) => setRole(itemValue)}
+      >
+        <Picker.Item
+          style={{ fontSize: 20 }}
+          label="Pasajero"
+          value="passenger"
+        />
+        <Picker.Item
+          style={{ fontSize: 20 }}
+          label="Conductor"
+          value="driver"
+        />
+      </Picker>
       <Pressable style={us.getinto} onPress={handleSubmit}>
         <TextFonted styles={us.text}>REGISTRATE</TextFonted>
       </Pressable>

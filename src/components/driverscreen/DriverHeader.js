@@ -13,7 +13,7 @@ const DriverHeader = () => {
 
   useEffect(() => {
     setName(user.name);
-  }, [user]);
+  });
 
   return (
     <View>

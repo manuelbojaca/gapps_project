@@ -38,12 +38,22 @@ export const userSlice = createSlice({
         user: { ...action.payload },
       };
     },
+
     user_location(state, action) {
       return {
         ...state,
         user: {
           ...state.user,
           location: [...action.payload],
+        },
+      };
+    },
+    add_vehicle(state, action) {
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          vehicles: [...state.vehicles, action.payload],
         },
       };
     },
@@ -56,6 +66,7 @@ export const {
   user_login_success,
   user_logout_success,
   user_location,
+  add_vehicle,
 } = userSlice.actions;
 
 export default userSlice.reducer;
