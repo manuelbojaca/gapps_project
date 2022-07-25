@@ -12,8 +12,9 @@ import {
   useSigninMutation,
 } from "../store/services/userAPI";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { user_load } from "../store/reducers/user.reducer";
+import Spinner from "react-native-loading-spinner-overlay";
 
 const storeData = async (key, value) => {
   try {
@@ -24,6 +25,7 @@ const storeData = async (key, value) => {
 };
 
 function Signin({ navigation }) {
+  const { location } = useSelector((state) => state.users);
   const dispatch = useDispatch();
   const [email, onChangeEmail] = useState("");
   const [password, onChangePassword] = useState("");
@@ -37,18 +39,18 @@ function Signin({ navigation }) {
 
   useEffect(() => {
     if (data) {
+      console.log("data");
       getUserById({ id: data.id, token: data.token });
       setLogged(true);
-      setTimeout(() => {
-        console.log("Esperando");
-        if (data.role === "passager") {
-          navigation.navigate("Home");
-        } else {
-          navigation.navigate("Driver");
-        }
-      }, 1000);
+      console.log("Esperando:", data.role);
+      if (data.role === "passenger") {
+        navigation.navigate("Home");
+      } else {
+        navigation.navigate("Driver");
+      }
+      console.log("pass signin");
     }
-  }, [data]);
+  }, [isLoading]);
 
   useEffect(() => {
     console.log("Result: ", result?.data?.data);
@@ -57,16 +59,20 @@ function Signin({ navigation }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await trigger({
-      email: email,
-      password: password,
-    })
-      .then((data) => storeData("token", data.data.token))
-      .catch((err) => console.log(err));
+
+    try {
+      await trigger({
+        email: email,
+        password: password,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
     <View style={bs.alwaysback}>
+      <Spinner visible={isLoading} />
       <Logo />
       <TextFonted styles={ts.default}>
         Inicia sesión, para comenzar a viajar

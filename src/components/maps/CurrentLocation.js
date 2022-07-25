@@ -4,6 +4,7 @@ import { View, Button, Text } from "react-native";
 import * as Location from "expo-location";
 import { useDispatch } from "react-redux";
 import { user_location } from "../../store/reducers/user.reducer";
+import Spinner from "react-native-loading-spinner-overlay";
 
 const CurrentLocation = () => {
   const dispatch = useDispatch();
@@ -20,6 +21,7 @@ const CurrentLocation = () => {
 
       let location = await Location.getCurrentPositionAsync({});
       setLocation(location);
+      dispatch(user_location(location.coords));
     })();
   }, []);
 
@@ -29,8 +31,8 @@ const CurrentLocation = () => {
   } else if (location) {
     text = JSON.stringify(location);
     console.log("text: ", location.coords);
-    dispatch(user_location(text));
   }
+  console.log("Location:", location);
 
   return <React.Fragment></React.Fragment>;
 };

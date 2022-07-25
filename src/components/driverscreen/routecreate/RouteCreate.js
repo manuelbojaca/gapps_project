@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { TextInput, View, Pressable, Modal, Button } from "react-native";
 import { useDispatch } from "react-redux";
-import TextFonted from "../../styles/TextFonted";
-const bs = require("../../styles/backgroundG");
-const is = require("../../styles/InputStyles");
-const us = require("../../styles/ButtonStyles");
-const ts = require("../../styles/TextStyles");
+import TextFonted from "../../../styles/TextFonted";
+const bs = require("../../../styles/backgroundG");
+const is = require("../../../styles/InputStyles");
+const us = require("../../../styles/ButtonStyles");
+const ts = require("../../../styles/TextStyles");
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useCreateRouteMutation } from "../../store/services/routeAPI";
+import { useCreateRouteMutation } from "../../../store/services/routeAPI";
 import { Picker } from "@react-native-picker/picker";
 
 export default function RouteCreate({ routesOpen, setRoutesOpen }) {
@@ -18,6 +18,8 @@ export default function RouteCreate({ routesOpen, setRoutesOpen }) {
   const [destination, setDestination] = useState("");
   const [time, setTime] = useState("");
   const [occupiedseats, setOccupiedseats] = useState("");
+  const [date, setDate] = useState(new Date());
+  const [open, setOpen] = useState(false);
 
   const routeData = {
     type: type,
@@ -26,6 +28,7 @@ export default function RouteCreate({ routesOpen, setRoutesOpen }) {
     destination: destination,
     time: time,
     occupiedseats: occupiedseats,
+    date,
   };
 
   const [trigger, { data, error, isLoading }] = useCreateRouteMutation();
@@ -95,7 +98,35 @@ export default function RouteCreate({ routesOpen, setRoutesOpen }) {
                 SELECCIONA RUTA LA EN EL MAPA
               </TextFonted>
             </Pressable>
-            {/* DATE PICKER*/}
+            {type === "trip" ? (
+              <DatePicker
+                modal
+                mode="datetime"
+                open={open}
+                date={date}
+                onConfirm={(date) => {
+                  setOpen(false);
+                  setDate(date);
+                }}
+                onCancel={() => {
+                  setOpen(false);
+                }}
+              />
+            ) : (
+              <DatePicker
+                modal
+                mode="time"
+                open={open}
+                date={time}
+                onConfirm={(date) => {
+                  setOpen(false);
+                  setDate(date);
+                }}
+                onCancel={() => {
+                  setOpen(false);
+                }}
+              />
+            )}
             <TextFonted styles={ts.default}>
               Elige la hora de partida
             </TextFonted>

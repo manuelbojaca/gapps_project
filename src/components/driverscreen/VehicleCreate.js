@@ -48,6 +48,7 @@ export default function VehicleCreate({ vehicleOpen, setVehicleOpen }) {
     setVehicleOpen(!setVehicleOpen);
     console.log("pasa");
   };
+  dispa;
 
   return (
     <React.Fragment>

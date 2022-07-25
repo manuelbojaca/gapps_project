@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import TextFonted from "../../styles/TextFonted";
 import { Pressable, View } from "react-native";
 import { useSelector } from "react-redux";
-import RoutesCard from "./RoutesCard";
 
 export default function VehicleCard({ vehicle, routesOpen, setRoutesOpen }) {
   const [brand, setBrand] = useState(vehicle.brand);

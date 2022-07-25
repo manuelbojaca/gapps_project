@@ -11,17 +11,9 @@ import TextFonted from "../styles/TextFonted";
 
 function Driver({ navigation }) {
   const { user } = useSelector((state) => state.users);
-  console.log("UserDriver:", user.vehicles);
+  console.log("UserDriver:", user);
   const [vehicleOpen, setVehicleOpen] = useState(false);
   const [routesOpen, setRoutesOpen] = useState(false);
-
-  const vehicle = {
-    type: "Automovil",
-    brand: "Mazda",
-    color: "Rojo",
-    plate: "FAM171",
-    seats: 4,
-  };
 
   return (
     <View style={bs.driverback}>

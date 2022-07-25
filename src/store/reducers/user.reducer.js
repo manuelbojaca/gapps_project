@@ -3,8 +3,17 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   loading: false,
   logged: false,
-  user: {},
-  location: [],
+  user: {
+    name: "Dominic",
+    vehicle: {
+      type: "Automovil",
+      brand: "Mazda",
+      color: "Rojo",
+      plate: "FAM171",
+      seats: 4,
+    },
+  },
+  location: null,
 };
 
 export const userSlice = createSlice({
@@ -41,11 +50,8 @@ export const userSlice = createSlice({
 
     user_location(state, action) {
       return {
-        ...state,
-        user: {
-          ...state.user,
-          location: [...action.payload],
-        },
+        ...state.user,
+        location: action.payload,
       };
     },
     add_vehicle(state, action) {
