@@ -1,7 +1,7 @@
 import React from "react";
 import { Image, StyleSheet } from "react-native";
 
-module.exports = () => {
+const Logo = () => {
   return (
     <Image
       style={styles.logo}
@@ -12,9 +12,15 @@ module.exports = () => {
   );
 };
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
   logo: {
     width: 250,
     height: 100,
   },
+  driverlogo: {
+    width: 100,
+    height: 100,
+  },
 });
+
+export default Logo;

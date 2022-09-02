@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
-import { TextInput, View, Pressable } from "react-native";
-import { Picker } from "@react-native-picker/picker";
+import { TextInput, View, Pressable, StyleSheet } from "react-native";
 import { useState } from "react";
-const Logo = require("../components/logo/Logo");
+import Logo from "../components/elements/Logo";
 import TextFonted from "../styles/TextFonted";
 const bs = require("../styles/backgroundG");
 const is = require("../styles/InputStyles");
@@ -13,6 +12,8 @@ import { useSignupMutation } from "../store/services/userAPI";
 import { useDispatch } from "react-redux";
 import { user_load } from "../store/reducers/user.reducer";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useGetUserByIdMutation } from "../store/services/userAPI";
+import { Picker } from "@react-native-picker/picker";
 
 const storeData = async (key, value) => {
   try {
@@ -32,21 +33,14 @@ function Register({ navigation }) {
   const [role, setRole] = useState("");
   const [logged, setLogged] = useState(false);
   const [getUserById, result] = useGetUserByIdMutation();
-  const radioData = [
-    {
-      label: "passenger",
-    },
-    {
-      label: "driver",
-    },
-  ];
+
   const userData = {
     name: name,
     lastname: lastname,
     email: email,
     phone: phone,
     password: password,
-    role: role.label,
+    role: role,
   };
   const [trigger, { data, error, isLoading }] = useSignupMutation();
 
@@ -57,20 +51,22 @@ function Register({ navigation }) {
   }, [isLoading]);
 
   useEffect(() => {
-    if (data) {
-      getUserById({ id: data.id, token: data.token });
-      setLogged(true);
-      if (data.role === "passager") {
-        navigation.navigate("Home");
-      } else {
-        navigation.navigate("Driver");
+    (async () => {
+      if (data) {
+        await getUserById({ id: data.id, token: data.token });
+        setLogged(true);
+        if (data.role === "passager") {
+          navigation.navigate("Home");
+        } else {
+          navigation.navigate("Driver");
+        }
       }
-    }
+    })();
   }, [data]);
 
   useEffect(() => {
-    console.log("Result: ", result?.data?.data);
-    logged && dispatch(user_load(result?.data?.data));
+    console.log("ResultReg: ", result?.data?.data);
+    dispatch(user_load(result?.data?.data));
   }, [result]);
 
   const handleSubmit = async (e) => {
@@ -78,7 +74,7 @@ function Register({ navigation }) {
     await trigger(userData)
       .then((data) => storeData("token", data.token))
       .catch((err) => console.log(err));
-    console.log(userData);
+    console.log("UserData", userData);
   };
 
   return (
@@ -118,11 +114,24 @@ function Register({ navigation }) {
         onChangeText={(newText) => setPassword(newText)}
         secureTextEntry={true}
       />
-      <RadioButtonRN
-        boxStyle={{ height: 20 }}
-        data={radioData}
-        selectedBtn={(e) => setRole(e)}
-      />
+      <TextFonted styles={ts.default}>Elige como quieres usar gapps</TextFonted>
+      <Picker
+        style={{ width: "40%" }}
+        dropdownIconColor="white"
+        selectedValue={role}
+        onValueChange={(itemValue, itemIndex) => setRole(itemValue)}
+      >
+        <Picker.Item
+          style={{ fontSize: 20 }}
+          label="Pasajero"
+          value="passenger"
+        />
+        <Picker.Item
+          style={{ fontSize: 20 }}
+          label="Conductor"
+          value="driver"
+        />
+      </Picker>
       <Pressable style={us.getinto} onPress={handleSubmit}>
         <TextFonted styles={us.text}>REGISTRATE</TextFonted>
       </Pressable>

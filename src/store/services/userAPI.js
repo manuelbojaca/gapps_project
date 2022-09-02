@@ -21,9 +21,11 @@ export const userApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "https://mighty-forest-62443.herokuapp.com/users",
   }),
+  tagTypes: ["User"],
   endpoints: (builder) => ({
     getUsers: builder.query({
       query: () => "",
+      providesTags: ["User"],
     }),
     signin: builder.mutation({
       query: (body) => ({
@@ -31,6 +33,7 @@ export const userApi = createApi({
         method: "POST",
         body,
       }),
+      invalidatesTags: ["User"],
     }),
     getUserById: builder.mutation({
       query: ({ id, token }) => ({
@@ -40,6 +43,7 @@ export const userApi = createApi({
           Authorization: `Bearer ${token}`,
         },
       }),
+      invalidatesTags: ["User"],
     }),
     signup: builder.mutation({
       query: (body) => ({
@@ -47,6 +51,7 @@ export const userApi = createApi({
         method: "POST",
         body,
       }),
+      invalidatesTags: ["User"],
     }),
   }),
 });

@@ -7,18 +7,16 @@ import { useSelector } from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 async function getValueFor(key) {
-  const result = await AsyncStorage.getItem(key);
+  let result = await AsyncStorage.getItem(key);
   return result;
 }
 
 function Pruebas({ navigation }) {
   const { user } = useSelector((state) => state.users);
   console.log("User", user);
-  try {
-    var token = getValueFor("token");
-  } catch (err) {
-    console.log("Pruebas:", err);
-  }
+
+  let token;
+  getValueFor("token").then((t) => (token = t));
   console.log("Token: ", token);
   return (
     <View style={s.alwaysback}>

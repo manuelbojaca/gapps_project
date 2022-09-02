@@ -2,8 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   loading: false,
-  route: {},
-  location: [],
+  vehicle: {},
 };
 
 export const vehicleSlice = createSlice({
@@ -25,13 +24,16 @@ export const vehicleSlice = createSlice({
     vehicle_load(state, action) {
       return {
         ...state,
-        user: { ...action.payload },
+        vehicle: { ...action.payload },
       };
     },
   },
 });
 
-export const { route_load, loading_route_request, loading_route_success } =
-  vehicleSlice.actions;
+export const {
+  vehicle_load,
+  loading_vehicle_request,
+  loading_vehicle_success,
+} = vehicleSlice.actions;
 
 export default vehicleSlice.reducer;

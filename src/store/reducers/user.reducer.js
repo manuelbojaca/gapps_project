@@ -4,7 +4,7 @@ const initialState = {
   loading: false,
   logged: false,
   user: {},
-  location: [],
+  location: null,
 };
 
 export const userSlice = createSlice({
@@ -38,12 +38,19 @@ export const userSlice = createSlice({
         user: { ...action.payload },
       };
     },
+
     user_location(state, action) {
+      return {
+        ...state.user,
+        location: action.payload,
+      };
+    },
+    update_vehicle(state, action) {
       return {
         ...state,
         user: {
           ...state.user,
-          location: [...action.payload],
+          vehicle: action.payload,
         },
       };
     },
@@ -56,6 +63,7 @@ export const {
   user_login_success,
   user_logout_success,
   user_location,
+  add_vehicle,
 } = userSlice.actions;
 
 export default userSlice.reducer;

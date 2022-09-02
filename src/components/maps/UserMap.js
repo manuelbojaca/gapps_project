@@ -1,16 +1,30 @@
 import * as React from "react";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import MapView, { Marker, Polyline } from "react-native-maps";
 import { StyleSheet, Text, View, Dimensions } from "react-native";
 import MapViewDirections from "react-native-maps-directions";
 import { GOOGLE_MAPS_KEY } from "@env";
+import CurrentLocation from "./CurrentLocation";
 
-const Map = () => {
-  const [origin, setOrigin] = useState({
-    latitude: 4.598023,
-    longitude: -74.069647,
+const UserMap = () => {
+  console.log("map");
+  const { location } = useSelector((state) => state.users);
+  const [userLocation, setUserLocation] = useState({
+    latitude: 4.1156735,
+    longitude: -72.9301367,
   });
 
+  location &&
+    setUserLocation({
+      latitude: location.latitude,
+      longitude: location.longitude,
+    });
+
+  const [origin, setOrigin] = useState({
+    latitude: userLocation.latitude,
+    longitude: userLocation.longitude,
+  });
   const [destination, setDestination] = useState({
     latitude: 4.700703,
     longitude: -74.143541,
@@ -46,11 +60,6 @@ const Map = () => {
           strokeColor="pink"
           strokeWidth={8}
         />
-        {/*<Polyline
-          coordinates={[origin, destination]}
-          strokeColor="pink"
-          strokeWidth={8}
-        />*/}
       </MapView>
     </View>
   );
@@ -69,4 +78,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Map;
+export default UserMap;

@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native-web";
+import { StyleSheet } from "react-native";
 
 const palette = {
   red: "#FF1616",
@@ -11,6 +11,10 @@ const palette = {
 export const theme = {
   colors: {
     background: palette.red,
+    backgroundmodal: palette.black,
+    backgroundcards: palette.white,
+    shadowmodal: palette.black,
+    driverBtn: palette.red,
     title: palette.pink,
     inputbg: palette.white,
     btntext: palette.grey,
@@ -28,7 +32,14 @@ export const theme = {
     s: 8,
     m: 16,
     l: 20,
-    xl: 40,
+    xl: 30,
+  },
+  rendersize: {
+    xs: 50,
+    s: 100,
+    m: 150,
+    l: 250,
+    xl: 450,
   },
   typography: StyleSheet.create({
     header: {

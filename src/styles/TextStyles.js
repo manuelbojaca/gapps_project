@@ -6,4 +6,7 @@ module.exports = StyleSheet.create({
     color: theme.colors.deftext,
     fontSize: theme.textsize.l,
   },
+  driver: {
+    fontWeight: "bold",
+  },
 });

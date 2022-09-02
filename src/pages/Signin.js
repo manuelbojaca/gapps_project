@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { TextInput, View, Pressable } from "react-native";
 import { useState } from "react";
-const Logo = require("../components/logo/Logo");
+import Logo from "../components/elements/Logo";
 const bs = require("../styles/backgroundG");
 const is = require("../styles/InputStyles");
 const us = require("../styles/ButtonStyles");
@@ -12,8 +12,9 @@ import {
   useSigninMutation,
 } from "../store/services/userAPI";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { user_load } from "../store/reducers/user.reducer";
+import Spinner from "react-native-loading-spinner-overlay";
 
 const storeData = async (key, value) => {
   try {
@@ -24,10 +25,10 @@ const storeData = async (key, value) => {
 };
 
 function Signin({ navigation }) {
+  const { location } = useSelector((state) => state.users);
   const dispatch = useDispatch();
   const [email, onChangeEmail] = useState("");
   const [password, onChangePassword] = useState("");
-  const [logged, setLogged] = useState(false);
   const [trigger, { data, error, isLoading }] = useSigninMutation();
   const [getUserById, result] = useGetUserByIdMutation();
 
@@ -36,34 +37,43 @@ function Signin({ navigation }) {
   }, [isLoading]);
 
   useEffect(() => {
-    if (data) {
-      getUserById({ id: data.id, token: data.token });
-      setLogged(true);
-      if (data.role === "passager") {
-        navigation.navigate("Home");
-      } else {
-        navigation.navigate("Driver");
+    (async () => {
+      if (data) {
+        console.log("data");
+        await getUserById({ id: data.id, token: data.token });
+        await storeData("token", data.token);
+        console.log("Esperando:", data.role);
+        if (data.role === "passenger") {
+          navigation.navigate("Home");
+        } else {
+          navigation.navigate("Driver");
+        }
+        console.log("Result:", result);
       }
-    }
-  }, [data]);
+    })();
+  }, [isLoading]);
 
   useEffect(() => {
-    console.log("Result: ", result?.data?.data);
-    logged && dispatch(user_load(result?.data?.data));
+    console.log("ResultSin: ", result?.data?.data);
+    dispatch(user_load(result?.data?.data));
   }, [result]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await trigger({
-      email: email,
-      password: password,
-    })
-      .then((data) => storeData("token", data.data.token))
-      .catch((err) => console.log(err));
+
+    try {
+      await trigger({
+        email: email,
+        password: password,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
     <View style={bs.alwaysback}>
+      <Spinner visible={isLoading} />
       <Logo />
       <TextFonted styles={ts.default}>
         Inicia sesión, para comenzar a viajar
