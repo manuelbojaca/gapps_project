@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { BASE_API } from "@env";
+import { vehicle_load } from "../reducers/vehicle.reducer";
 
 const _retrieveToken = async () => {
   try {
@@ -24,15 +25,28 @@ export const vehicleApi = createApi({
     getVehicles: builder.query({
       query: () => "",
     }),
-    getVehicleById: builder.mutation({
+    /*getVehicleById: builder.mutation({
       query: ({ id, token }) => ({
         url: `/${id}`,
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
         },
+
       }),
+    }),*/
+    getVehicleById: builder.query({
+      query: (id, token) => `/${id}`,
+      async onQueryStarted(id, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(vehicle_load(data));
+        } catch (err) {
+          console.log(err);
+        }
+      },
     }),
+    /*
     createVehicle: builder.mutation({
       query: ({ body, token }) => ({
         url: "/",
@@ -42,6 +56,18 @@ export const vehicleApi = createApi({
         },
         body: body,
       }),
+    }),
+    */
+    getVehicleById: builder.query({
+      query: (body, token) => "/",
+      async onQueryStarted(id, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(vehicle_load(data));
+        } catch (err) {
+          console.log();
+        }
+      },
     }),
     editVehicle: builder.mutation({
       query: ({ id, body, token }) => ({
@@ -67,7 +93,7 @@ export const vehicleApi = createApi({
 
 export const {
   useGetVehiclesQuery,
-  useGetVehicleByIdMutation,
+  useGetVehicleByIdQuery,
   useCreateVehicleMutation,
   useEditVehicleMutation,
   useDeleteVehicleMutation,

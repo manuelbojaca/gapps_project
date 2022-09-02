@@ -15,7 +15,7 @@ export const store = configureStore({
     route: routeReducer,
     [routeApi.reducerPath]: routeApi.reducer,
     routes: routesReducer,
-    vehicleReducer: vehicleReducer,
+    vehicles: vehicleReducer,
     [vehicleApi.reducerPath]: vehicleApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>

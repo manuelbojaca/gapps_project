@@ -7,8 +7,12 @@ const is = require("../../styles/InputStyles");
 const us = require("../../styles/ButtonStyles");
 const ts = require("../../styles/TextStyles");
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useCreateVehicleMutation } from "../../store/services/vehicleAPI";
-import { add_vehicle } from "../../store/reducers/user.reducer";
+import {
+  useCreateVehicleMutation,
+  useGetVehicleByIdQuery,
+} from "../../store/services/vehicleAPI";
+
+import { user_load } from "../../store/reducers/user.reducer";
 import { Picker } from "@react-native-picker/picker";
 
 export default function VehicleCreate({ vehicleOpen, setVehicleOpen }) {
@@ -25,30 +29,36 @@ export default function VehicleCreate({ vehicleOpen, setVehicleOpen }) {
     plate: plate,
     seats: seats,
   };
-  const [trigger, { data, error, isLoading }] = useCreateVehicleMutation();
+  const [trigger, { data, error, isLoading }] = useGetVehicleByIdQuery();
 
   async function getValueFor(key) {
     let result = await AsyncStorage.getItem(key);
     return result;
   }
 
-  useEffect(() => {
-    console.log("Data: ", data, error, isLoading);
-  }, [isLoading]);
+  /*useEffect(() => {
+    (async () => {
+      await getUserById({ id: data.userId, token: token });
+      console.log("Data: ", data, error, isLoading);
+    })();
+  }, [data]);*/
+
+  /*useEffect(() => {
+    console.log("ResultSin: ", result?.data?.data);
+    dispatch(user_load(result?.data?.data));
+  }, [result]);*/
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const token = await getValueFor("token");
-    setTimeout(() => {
-      console.log("wait:", token);
-      trigger({ body: vehicleData, token: token }).catch((err) =>
-        console.log(err)
-      );
-    }, 5000);
+    console.log(vehicleData);
+    await trigger({ body: vehicleData, token: token });
+    console.log("wait:", data);
+    console.log("wait:", data, error, isLoading);
     setVehicleOpen(!setVehicleOpen);
+
     console.log("pasa");
   };
-  dispa;
 
   return (
     <React.Fragment>

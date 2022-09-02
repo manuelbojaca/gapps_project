@@ -3,16 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   loading: false,
   logged: false,
-  user: {
-    name: "Dominic",
-    vehicle: {
-      type: "Automovil",
-      brand: "Mazda",
-      color: "Rojo",
-      plate: "FAM171",
-      seats: 4,
-    },
-  },
+  user: {},
   location: null,
 };
 
@@ -54,12 +45,12 @@ export const userSlice = createSlice({
         location: action.payload,
       };
     },
-    add_vehicle(state, action) {
+    update_vehicle(state, action) {
       return {
         ...state,
         user: {
           ...state.user,
-          vehicles: [...state.vehicles, action.payload],
+          vehicle: action.payload,
         },
       };
     },

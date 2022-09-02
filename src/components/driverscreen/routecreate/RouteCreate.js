@@ -9,6 +9,7 @@ const ts = require("../../../styles/TextStyles");
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useCreateRouteMutation } from "../../../store/services/routeAPI";
 import { Picker } from "@react-native-picker/picker";
+import DatePicker from "react-native-date-picker";
 
 export default function RouteCreate({ routesOpen, setRoutesOpen }) {
   const dispatch = useDispatch();
@@ -16,7 +17,7 @@ export default function RouteCreate({ routesOpen, setRoutesOpen }) {
   const [name, setName] = useState("");
   const [origin, setOrigin] = useState("");
   const [destination, setDestination] = useState("");
-  const [time, setTime] = useState("");
+  const [time, setTime] = useState(new Date());
   const [occupiedseats, setOccupiedseats] = useState("");
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
@@ -93,55 +94,18 @@ export default function RouteCreate({ routesOpen, setRoutesOpen }) {
               value={name}
               onChangeText={(newText) => setName(newText)}
             />
-            <Pressable style={us.getinto} onPress={handleSubmit}>
-              <TextFonted styles={us.text}>
-                SELECCIONA RUTA LA EN EL MAPA
-              </TextFonted>
-            </Pressable>
-            {type === "trip" ? (
-              <DatePicker
-                modal
-                mode="datetime"
-                open={open}
-                date={date}
-                onConfirm={(date) => {
-                  setOpen(false);
-                  setDate(date);
-                }}
-                onCancel={() => {
-                  setOpen(false);
-                }}
-              />
-            ) : (
-              <DatePicker
-                modal
-                mode="time"
-                open={open}
-                date={time}
-                onConfirm={(date) => {
-                  setOpen(false);
-                  setDate(date);
-                }}
-                onCancel={() => {
-                  setOpen(false);
-                }}
-              />
-            )}
-            <TextFonted styles={ts.default}>
-              Elige la hora de partida
-            </TextFonted>
-            <TextInput
-              style={is.default}
-              value={time}
-              onChangeText={(newText) => setTime(newText)}
+            <Button
+              title={"Selecciona la Ruta"}
+              onPress={() => setOpen(true)}
             />
+            {/*DATAPICKER*/}
             <TextFonted styles={ts.default}>
               Elige la cantidad de asientos disponibles{" "}
             </TextFonted>
             <TextInput
               style={is.default}
               value={occupiedseats}
-              onChangeText={(newText) => setPlate(newText)}
+              onChangeText={(newText) => setOccupiedseats(newText)}
               keyboardtype="numeric"
             />
             <Pressable style={us.getinto} onPress={handleSubmit}>

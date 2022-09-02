@@ -33,21 +33,14 @@ function Register({ navigation }) {
   const [role, setRole] = useState("");
   const [logged, setLogged] = useState(false);
   const [getUserById, result] = useGetUserByIdMutation();
-  const radioData = [
-    {
-      label: "passenger",
-    },
-    {
-      label: "driver",
-    },
-  ];
+
   const userData = {
     name: name,
     lastname: lastname,
     email: email,
     phone: phone,
     password: password,
-    role: role.label,
+    role: role,
   };
   const [trigger, { data, error, isLoading }] = useSignupMutation();
 
@@ -58,20 +51,22 @@ function Register({ navigation }) {
   }, [isLoading]);
 
   useEffect(() => {
-    if (data) {
-      getUserById({ id: data.id, token: data.token });
-      setLogged(true);
-      if (data.role === "passager") {
-        navigation.navigate("Home");
-      } else {
-        navigation.navigate("Driver");
+    (async () => {
+      if (data) {
+        await getUserById({ id: data.id, token: data.token });
+        setLogged(true);
+        if (data.role === "passager") {
+          navigation.navigate("Home");
+        } else {
+          navigation.navigate("Driver");
+        }
       }
-    }
+    })();
   }, [data]);
 
   useEffect(() => {
-    console.log("Result: ", result?.data?.data);
-    logged && dispatch(user_load(result?.data?.data));
+    console.log("ResultReg: ", result?.data?.data);
+    dispatch(user_load(result?.data?.data));
   }, [result]);
 
   const handleSubmit = async (e) => {
@@ -79,7 +74,7 @@ function Register({ navigation }) {
     await trigger(userData)
       .then((data) => storeData("token", data.token))
       .catch((err) => console.log(err));
-    console.log(userData);
+    console.log("UserData", userData);
   };
 
   return (

@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import TextFonted from "../../styles/TextFonted";
 import { Pressable, View } from "react-native";
 import { useSelector } from "react-redux";
-import RoutesCard from "./RoutesCard";
 const bs = require("../../styles/backgroundG");
 
-export default function VehicleCard({ vehicle, routesOpen, setRoutesOpen }) {
+export default function VehicleCard({ routesOpen, setRoutesOpen }) {
+  const vehicle = useSelector((state) => state.vehicles);
+
   return (
     <React.Fragment>
       <Pressable style={bs.modalcontainer}>

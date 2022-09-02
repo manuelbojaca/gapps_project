@@ -80,3 +80,13 @@ const styles = StyleSheet.create({
 });
 
 export default DriverMap;
+
+{
+  /*https://makeitrealcamp.slack.com/archives/C0519R8V8*/
+}
+{
+  /*https://www.italki.com/*/
+}
+{
+  /*https://github.com/SergioJaramilloL/js-test  */
+}

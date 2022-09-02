@@ -29,7 +29,6 @@ function Signin({ navigation }) {
   const dispatch = useDispatch();
   const [email, onChangeEmail] = useState("");
   const [password, onChangePassword] = useState("");
-  const [logged, setLogged] = useState(false);
   const [trigger, { data, error, isLoading }] = useSigninMutation();
   const [getUserById, result] = useGetUserByIdMutation();
 
@@ -38,23 +37,25 @@ function Signin({ navigation }) {
   }, [isLoading]);
 
   useEffect(() => {
-    if (data) {
-      console.log("data");
-      getUserById({ id: data.id, token: data.token });
-      setLogged(true);
-      console.log("Esperando:", data.role);
-      if (data.role === "passenger") {
-        navigation.navigate("Home");
-      } else {
-        navigation.navigate("Driver");
+    (async () => {
+      if (data) {
+        console.log("data");
+        await getUserById({ id: data.id, token: data.token });
+        await storeData("token", data.token);
+        console.log("Esperando:", data.role);
+        if (data.role === "passenger") {
+          navigation.navigate("Home");
+        } else {
+          navigation.navigate("Driver");
+        }
+        console.log("Result:", result);
       }
-      console.log("pass signin");
-    }
+    })();
   }, [isLoading]);
 
   useEffect(() => {
-    console.log("Result: ", result?.data?.data);
-    logged && dispatch(user_load(result?.data?.data));
+    console.log("ResultSin: ", result?.data?.data);
+    dispatch(user_load(result?.data?.data));
   }, [result]);
 
   const handleSubmit = async (e) => {
